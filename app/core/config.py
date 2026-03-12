@@ -5,7 +5,7 @@ import torch
 # Paths & Model Configuration
 # =========================
 
-DATA_PATH = r"data/sales_dataset.xlsx"
+DATA_PATH = r"data/employees.csv"
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 MAX_NEW_TOKENS = 128
