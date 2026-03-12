@@ -1,23 +1,30 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException
 from app.graph.graph_builder import run_agent
-from app.data.loader import load_dataset
-from app.core.config import DATA_PATH
+from app.api.schemas import QuestionRequest, AgentResponse 
 
 router = APIRouter()
 
-# Load dataset once at startup
-df = load_dataset(DATA_PATH)
 
-@router.get("/ask")
-def ask_question(question: str = Query(..., description="User's analytics question")):
-    if not question.strip():
+@router.post("/ask", response_model=AgentResponse)
+def ask_question(request: QuestionRequest):
+    if not request.question.strip():
         raise HTTPException(status_code=400, detail="Question cannot be empty")
 
     try:
-        result = run_agent(
-            question=question,
+        state = run_agent(question=request.question)
+        
+        if state.get("rejection_reason"):
+            final_result = f"Result = Rejected, Reason: {state.get('rejection_reason')}"
+        else:
+            final_result = state.get("explained_result") or state.get("result")
+
+        return AgentResponse(
+            result=final_result,
+            valid_code=bool(state.get("valid_code")),
+            error=state.get("error_message"),
+            attempts=state.get("attempts", 0),
+            explanation=state.get("rejection_reason")
         )
+        
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Agent execution failed: {str(e)}")
-
-    return {"question": question, "answer": result}
