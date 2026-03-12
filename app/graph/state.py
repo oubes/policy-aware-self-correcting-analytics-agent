@@ -7,7 +7,7 @@ class AgentState(TypedDict):
     raw_code: str | None
     extracted_code: str | None
     valid_code: bool | None
-    result: Any | None
+    result: Any
     explained_result: str | None
     authorized: bool | None
     rejection_reason: str | None
@@ -15,4 +15,5 @@ class AgentState(TypedDict):
     request_classified: bool | None
     analysis_done: bool | None
     answered: bool | None
-    attempts: int | None
+    attempts: int
+    error_message: str | None
