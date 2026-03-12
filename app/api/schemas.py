@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Any, dict
+from typing import Any
 
 class QuestionRequest(BaseModel):
     question: str
