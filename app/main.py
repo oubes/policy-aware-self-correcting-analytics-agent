@@ -1,11 +1,11 @@
 from fastapi import FastAPI
-from app.api.v1.endpoints import analytics
+from app.api.v1.endpoints.analytics import router
+from app.api.v1.endpoints.analytics_eval import router as eval_router
 
-app = FastAPI(title="Policy-Aware Self-Correcting Analytics Agent")
+app = FastAPI(
+    title="Decision Driven Analytics Agent",
+    version="1.0.0"
+)
 
-# Register endpoints
-app.include_router(analytics.router, prefix="/api/v1/analytics", tags=["Analytics"])
-
-@app.get("/")
-def root():
-    return {"status": "ok", "message": "Agent API is running"}
+app.include_router(router)
+app.include_router(eval_router)
