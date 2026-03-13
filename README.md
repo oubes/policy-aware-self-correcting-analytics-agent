@@ -1,58 +1,142 @@
-# 🚀 Policy-Aware Self-Correcting Analytics Agent
+# 🧠 Policy-Aware Self-Correcting Analytics Agent
 
-**Policy-Aware Self-Correcting Analytics Agent** is a robust, production-ready AI agent that transforms natural language questions into executable **Pandas code**.  
-It features a **self-correcting control loop**, a **security sandbox** to prevent malicious code execution, and a **policy enforcement layer** to ensure **data privacy and safe analytics**.
-
----
-
-# 🖥️ User Interface
-
-Below is a preview of the dashboard where users can interact with their data and monitor system performance.
-
-
----
-
-# 🏗 System Architecture
-
-The agent operates on a **state-based workflow** defined using **LangGraph**.  
-It follows a **directed cyclic graph** to handle extraction, validation, execution, and automated retries.
-
+<p align="center">
+  <img src="https://img.shields.io/badge/Timeline-March%202026%20--%20Present-blue?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Status-Active%20Development-success?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Architecture-LangGraph%20Workflow-orange?style=for-the-badge" />
+  <br/>
+  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
+  <img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" />
+  <img src="https://img.shields.io/badge/LangGraph-Agentic%20Workflow-white?style=for-the-badge" />
+</p>
 
 ---
 
-# 1️⃣ Control Flow
+# 📖 Overview
 
-| Node | Responsibility |
-|-----|-----|
-| `get_question` | Initializes the agent state and loads the dataset schema |
-| `validate_code` | Scans generated code for forbidden syntax (imports, classes, etc.) |
-| `extract_code` | Cleans LLM output, removing markdown fences and redundant imports |
-| `run_code` | Executes the code in a restricted sandbox environment |
-| `fix_code` | Sends error logs back to the LLM for automated debugging |
+The **Policy-Aware Self-Correcting Analytics Agent** is an **agentic AI system** that converts natural language questions into **safe executable Pandas analytics**.
+
+Instead of executing model output directly, the system introduces a **policy-aware control loop** that validates, executes, and repairs generated code.
+
+The architecture combines:
+
+- **LangGraph state machines**
+- **AST-based security validation**
+- **sandboxed execution**
+- **automatic code repair**
+
+to enable **secure natural-language data analysis**.
 
 ---
 
-# 🔐 Security Policy
+# 🖥️ System Interface
 
-To maintain **data integrity and system safety**, the agent enforces strict **AST (Abstract Syntax Tree)** checks.
+<p align="center">
+  <img src="assets/ui_1.png" width="900"/>
+</p>
 
-### Forbidden Nodes
+<p align="center">
+  <img src="assets/ui_2.png" width="440"/>
+  <img src="assets/ui_3.png" width="440"/>
+</p>
+
+The web interface allows users to:
+
+- submit natural language questions
+- execute analytics queries
+- view computed results instantly
+
+The UI is served through **FastAPI** and communicates with the analytics agent through REST endpoints.
+
+---
+
+# 🏗️ System Architecture
+
+<p align="center">
+<img src="app/data/graph_flow.png" />
+</p>
+
+The system operates through a **LangGraph state workflow**.
+
+Each node in the graph represents a stage in the analytics pipeline, allowing controlled transitions between:
+
+- code generation
+- policy validation
+- execution
+- retry and repair
+
+---
+
+# 🚀 Core Features
+
+### ⚙️ LangGraph-Based Agent Workflow
+A state-driven graph coordinates every step of the analytics lifecycle.
+
+### 🔐 Policy Enforcement Layer
+Generated code is inspected using **AST parsing** before execution to prevent unsafe operations.
+
+### ♻️ Self-Correcting Execution
+If generated code fails, the agent automatically retries using a **repair prompt**.
+
+### 📊 Secure Data Access
+The agent only returns **aggregated analytics results**, preventing exposure of raw datasets.
+
+### 🖥️ Web-Based Interaction
+A lightweight **FastAPI dashboard** enables users to interact with the analytics agent in real time.
+
+---
+
+# 🔄 Agent Workflow
+
+Each user request passes through a structured pipeline:
+
+1️⃣ **Question Intake**  
+Loads dataset schema and initializes the agent state.
+
+2️⃣ **Code Generation**  
+The LLM generates Pandas code to answer the question.
+
+3️⃣ **Code Extraction**  
+Markdown formatting and unnecessary text are removed.
+
+4️⃣ **Policy Validation**  
+AST checks ensure the code contains no forbidden operations.
+
+5️⃣ **Secure Execution**  
+Code runs inside a restricted sandbox environment.
+
+6️⃣ **Retry / Repair**  
+If execution fails, error traces are sent back to the model for correction.
+
+---
+
+# 🔒 Security Guardrails
+
+The system enforces strict execution policies to prevent unsafe behavior.
+
+### AST Restrictions
+
+The following Python constructs are blocked:
 
 - `Import`
 - `With`
 - `ClassDef`
 - `FunctionDef`
 
-### Forbidden Calls
+### Forbidden Runtime Calls
+
+The sandbox prevents operations like:
 
 - `open`
-- `__import__`
 - `eval`
+- `__import__`
 
-### Data Access Policy
+### Data Privacy Policy
 
-The agent **cannot return raw DataFrames**.  
-Instead, it must return **aggregated results only**, such as:
+The agent **cannot return entire DataFrames**.
+
+Instead, outputs must be **aggregated analytics**, such as:
 
 - `sum`
 - `mean`
@@ -60,64 +144,121 @@ Instead, it must return **aggregated results only**, such as:
 - `min`
 - `max`
 
-This prevents **data leakage** from the underlying dataset.
+---
+
+# 📂 Project Structure
+
+The repository follows a modular structure centered around the `app` package.
+
+```text
+├── app
+│
+│   ├── main.py                     # FastAPI application entry point
+│
+│   ├── agent
+│   │   ├── code_cleaner.py         # Extracts Python code from LLM output
+│   │   ├── explain_result.py       # Converts raw outputs into human-readable responses
+│   │   ├── llm_client.py           # LLM API client
+│   │   ├── policy.py               # Query authorization rules
+│   │   ├── prompts.py              # System and repair prompts
+│   │   └── retry_logic.py          # Self-correction logic
+│
+│   ├── api
+│   │   ├── schemas.py              # Request and response models
+│   │   └── v1
+│   │       └── endpoints
+│   │           ├── analytics.py    # Main analytics endpoint
+│   │           └── analytics_eval.py # Evaluation endpoint
+│
+│   ├── core
+│   │   └── config.py               # Global configuration
+│
+│   ├── data
+│   │   ├── loader.py               # Dataset loading utilities
+│   │   └── graph_flow.png          # Graph architecture visualization
+│
+│   ├── execution
+│   │   ├── executor.py             # Code execution controller
+│   │   └── sandbox.py              # Restricted execution environment
+│
+│   ├── graph
+│   │   ├── graph_builder.py        # LangGraph construction
+│   │   ├── nodes.py                # Agent processing nodes
+│   │   ├── edges.py                # Conditional routing logic
+│   │   └── state.py                # Agent state definition
+│
+│   └── web
+│       └── index.html              # Frontend dashboard
+│
+├── data
+│   └── employees.csv               # Example dataset
+│
+├── evaluation
+│   ├── metrics.py                  # Evaluation metrics
+│   ├── red_team_cases.py           # Adversarial prompts
+│   └── run_eval.py                 # Evaluation runner
+│
+└── scripts
+    └── graph_utils.py              # Graph visualization utilities
+````
 
 ---
 
-# 🛠 Key Features
+# 📊 Evaluation & Red Team Testing
 
-### Autonomous Logic
-Powered by **LangGraph** to enable complex decision-driven workflows.
+The system includes an evaluation pipeline designed to test robustness against **prompt injection** and **policy violations**.
 
-### Security Sandbox
-Uses **AST parsing** to block dangerous operations like filesystem access.
+The `/analytics_eval` endpoint runs predefined adversarial prompts and measures performance across multiple metrics.
 
-### Self-Healing Execution
-If generated code fails, the agent automatically calls the **`fix_code` node** to repair and retry execution.
-
-### Red-Team Ready
-Includes an **evaluation suite** designed to test the system against **prompt injection attacks** and policy violations.
-
-### Modern Web UI
-A sleek **FastAPI-powered dashboard** allows users to interact with the analytics agent in real time.
+| Metric                  | Description                               |
+| ----------------------- | ----------------------------------------- |
+| **Success Rate**        | Percentage of queries correctly answered  |
+| **Rejection Precision** | Accuracy of rejecting malicious prompts   |
+| **Repair Rate**         | Ability of the system to fix failing code |
 
 ---
 
-## 📂 Project Structure
+# 🛠 Installation
+
+### 1️⃣ Install Dependencies
 
 ```bash
-├── app
-│   ├── agent          # LLM logic, prompts, and code cleaning
-│   ├── api            # FastAPI routes and Pydantic schemas
-│   ├── core           # Configuration and environment management
-│   ├── execution      # Secure sandbox and code executor
-│   ├── graph          # LangGraph nodes, edges, and state definitions
-│   └── web            # Frontend (index.html)
-├── data               # CSV datasets
-├── evaluation         # Red-team test cases and metric calculators
-└── main.py            # Application entry point
+pip install -r requirements.txt
 ```
 
-## 🚀 Getting Started
-### 1. Prerequisites
+### 2️⃣ Configure Environment
 
-Python 3.10+
+Create a `.env` file:
 
-OpenAI-compatible API Key (e.g., Qwen, GPT-4)
+```bash
+DASHSCOPE_API_KEY=your_api_key_here
+```
 
-### 2. Installation
-# Install dependencies
-pip install fastapi uvicorn pandas numpy openai python-dotenv langgraph torch
+---
 
-# Setup environment variables
-echo "DASHSCOPE_API_KEY=your_key_here" > .env
-### 3. Running the Application
-uvicorn main:app --reload
+# ▶️ Running the Application
 
-Navigate to http://localhost:8000
- to access the interactive dashboard.
+Start the FastAPI server:
 
-## 📊 Evaluation & Red Teaming
+```bash
+uvicorn app.main:app --reload
+```
 
-The project includes an /evaluate endpoint that runs the agent against a suite of "Red Team" prompts designed to attempt breaking the system policies.
-The system tracks Success Rate, Rejection Precision, and Repair Rate.
+Open the dashboard:
+
+```
+http://127.0.0.1:8000
+```
+
+---
+
+# 🎯 Project Goal
+
+This project demonstrates how **LLM-powered analytics systems** can be safely deployed using:
+
+* **policy-aware code generation**
+* **graph-based agent orchestration**
+* **secure sandbox execution**
+* **self-correcting reasoning loops**
+
+to deliver **reliable natural language analytics over structured datasets**.
