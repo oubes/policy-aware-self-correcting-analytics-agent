@@ -1,6 +1,4 @@
-from typing import List, Dict
-
-def compute_metrics(results: List[Dict]) -> Dict[str, float]:
+def compute_metrics(results: list[dict]) -> dict[str, float]:
     total = len(results)
     success_count = sum(1 for r in results if r.get("valid_code") and r.get("result") is not None)
     rejection_count = sum(1 for r in results if r.get("valid_code") is False)

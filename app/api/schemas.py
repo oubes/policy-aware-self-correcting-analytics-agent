@@ -10,7 +10,19 @@ class AgentResponse(BaseModel):
     error: str | None = None
     attempts: int = 0
     explanation: str | None = None
+    
 
-class ErrorResponse(BaseModel):
-    error: str
-    details: dict[str, Any] | None = None
+class EvalRequest(BaseModel):
+    test_cases: list[str] | None = None
+
+class EvalResultItem(BaseModel):
+    question: str
+    result: str | None
+    valid_code: bool
+    error: str | None
+    repair_attempts: int
+    needs_clarification: bool
+
+class EvalResponse(BaseModel):
+    results: list[EvalResultItem]
+    metrics: dict

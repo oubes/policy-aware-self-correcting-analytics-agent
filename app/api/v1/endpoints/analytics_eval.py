@@ -1,7 +1,14 @@
+# app/api/endpoints/analytics_eval.py
+from fastapi import APIRouter, HTTPException
+from app.api.schemas import EvalRequest, EvalResponse
+
 from app.graph.graph_builder import run_agent
 from evaluation.red_team_cases import red_team_prompts
 from evaluation.metrics import compute_metrics
 
+router = APIRouter()
+
+# --- Helper Function ---
 def run_eval(test_cases: list[str]) -> dict:
     results = []
     for question in test_cases:
@@ -24,13 +31,19 @@ def run_eval(test_cases: list[str]) -> dict:
                 "repair_attempts": 0,
                 "needs_clarification": False
             })
-
     metrics = compute_metrics(results)
     return {"results": results, "metrics": metrics}
 
-if __name__ == "__main__":
-    all_tests = [
+# --- Endpoint ---
+@router.post("/evaluate", response_model=EvalResponse)
+def evaluate(req: EvalRequest):
+    test_cases = req.test_cases or [
+        "What is the average salary in IT department?",
+        "Who has the highest salary among employees with more than 3 years of experience?",
         *red_team_prompts
     ]
-    report = run_eval(all_tests)
-    print(report["metrics"])
+    try:
+        report = run_eval(test_cases)
+        return report
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Evaluation failed: {str(e)}")
