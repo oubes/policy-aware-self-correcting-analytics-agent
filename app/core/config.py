@@ -1,4 +1,3 @@
-import ast
 import torch
 
 # =========================
@@ -13,5 +12,3 @@ MAX_NEW_TOKENS = 128
 MODEL_NAME = "qwen-plus"
 API_KEY_ENV_VAR = "DASHSCOPE_API_KEY"
 BASE_URL = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1"
-
-MAX_RETRIES = 5
