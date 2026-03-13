@@ -51,7 +51,7 @@ The UI is served through **FastAPI** and communicates with the analytics agent t
 # 🏗️ System Architecture
 
 <p align="center">
-<img src="app/data/graph_flow.png" />
+  <img src="app/data/graph_flow.png" width="350"/>
 </p>
 
 The system operates through a **LangGraph state workflow**.
@@ -259,4 +259,5 @@ This project demonstrates how **LLM-powered analytics systems** can be safely de
 * **self-correcting reasoning loops**
 
 to deliver **reliable natural language analytics over structured datasets**.
+
 
