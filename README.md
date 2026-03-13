@@ -33,12 +33,9 @@ to enable **secure natural-language data analysis**.
 # 🖥️ System Interface
 
 <p align="center">
-  <img src="assets/ui_1.png" width="900"/>
-</p>
-
-<p align="center">
-  <img src="assets/ui_2.png" width="440"/>
-  <img src="assets/ui_3.png" width="440"/>
+  <img src="assets/ui_1.png" width="900"/><br><br>
+  <img src="assets/ui_2.png" width="900"/><br><br>
+  <img src="assets/ui_3.png" width="900"/>
 </p>
 
 The web interface allows users to:
@@ -262,3 +259,4 @@ This project demonstrates how **LLM-powered analytics systems** can be safely de
 * **self-correcting reasoning loops**
 
 to deliver **reliable natural language analytics over structured datasets**.
+
