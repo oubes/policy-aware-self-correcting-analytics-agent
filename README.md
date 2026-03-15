@@ -1,6 +1,7 @@
 # 🧠 Policy-Aware Self-Correcting Analytics Agent
 
 <p align="center">
+  <img src="https://img.shields.io/badge/Scholarship-DEPI-red?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Timeline-March%202026%20--%20Present-blue?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Status-Active%20Development-success?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Architecture-LangGraph%20Workflow-orange?style=for-the-badge" />
@@ -246,6 +247,19 @@ Open the dashboard:
 ```
 http://127.0.0.1:8000
 ```
+---
+
+
+## 🤝 Acknowledgments & Credits
+
+This project was developed under the umbrella of the **Digital Egypt Pioneers Initiative (DEPI)** scholarship.
+
+Special thanks and appreciation to:
+
+* **[Eng. Baraa Abu Salout](https://www.linkedin.com/in/baraasallout/)**
+    * For his exceptional mentorship, technical guidance, and for sharing his deep expertise in AI agent architectures and LangGraph workflows.
+* **[DEPI (Digital Egypt Pioneers Initiative)](https://www.linkedin.com/company/digital-egypt-pioneers-initiative-depi/)**
+    * For providing the scholarship, resources, and the professional environment to foster innovation in the field of AI and data analytics.
 
 ---
 
